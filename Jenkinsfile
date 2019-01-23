@@ -42,6 +42,20 @@ pipeline {
   post {
     success {
       archiveArtifacts artifacts: 'build/**'
+      script {
+        if (env.BRANCH_NAME != 'master') {
+          def downstreamUrl = new URL("${env.JENKINS_URL}/job/xtext-core/job/${env.BRANCH_NAME}")
+          print "Checking ${downstreamUrl}"
+          def code = downstreamUrl.openConnection().with {
+            requestMethod = 'HEAD'
+            it.connect()
+            responseCode
+          }
+          if (code == 200) {
+            build job: "xtext-core/job/${env.BRANCH_NAME}", wait: false
+          }
+        }
+      }
     }
     changed {
       script {
