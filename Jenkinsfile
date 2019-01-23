@@ -48,7 +48,6 @@ pipeline {
           print "Checking ${downstreamUrl}"
           def code = downstreamUrl.openConnection().with {
             requestMethod = 'HEAD'
-            it.connect()
             responseCode
           }
           if (code == 200) {
