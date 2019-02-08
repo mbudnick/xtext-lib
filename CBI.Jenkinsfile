@@ -63,11 +63,11 @@ spec:
       }
     }
 
-    stage('Build Xtext BOM') {
+    stage('Cleanup Old Artifacts') {
       steps {
         dir('.m2/repository/org/eclipse/xtext') { deleteDir() }
         dir('.m2/repository/org/eclipse/xtend') { deleteDir() }
-        sh 'sh ./1-install-bom.sh'
+        //sh 'sh ./1-install-bom.sh'
       }
     }
 
